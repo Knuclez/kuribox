@@ -1,0 +1,8 @@
+CREATE TABLE characters (
+  id SERIAL PRIMARY KEY,
+  vida INTEGER NOT NULL,
+  mana INTEGER NOT NULL,
+  danio INTEGER NOT NULL,
+  oro INTEGER NOT NULL,
+  user_id INTEGER NOT NULL
+);
