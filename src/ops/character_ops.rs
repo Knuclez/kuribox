@@ -25,14 +25,14 @@ pub fn get_character(u_id: i32) -> Character{
 }
 
 
-pub fn create_character(u_id: i32){
+pub fn create_character(u_id: i32, life_point: bool, damage_point: bool, mana_point:bool){
     use crate::schema::characters::dsl::*;
     let mut conn = establish_connection();
 
     let new_char = NewCharacter{
-         vida: 100,
-         mana:  100,
-         danio: 10,
+         vida: if life_point {120} else {100},
+         mana:  if mana_point {120} else {100},
+         danio: if damage_point{20} else {10},
          oro: 0,
          user_id: &u_id,
 

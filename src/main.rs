@@ -56,6 +56,8 @@ async fn user_haves_character(path: web::Path<String>) -> impl Responder {
     let id = path.into_inner().parse::<i32>().unwrap();
     let haves_char = ops::character_ops::check_for_character(id);
 
+
+    println!("LOG actix; Character pinged");
     if haves_char == true{
         return HttpResponse::Ok().body("User_haves_char");
     } else {
@@ -64,11 +66,16 @@ async fn user_haves_character(path: web::Path<String>) -> impl Responder {
 }
 
 
-#[get("/user/{user_id}/create_character")]
-async fn create_character(path: web::Path<String>) -> impl Responder {
-    let id = path.into_inner().parse::<i32>().unwrap();
-    ops::character_ops::create_character(id);
+#[get("/user/{user_id}/create_character/{life}/{damage}/{mana}")]
+async fn create_character(path: web::Path<(String, String, String, bool)>) -> impl Responder {
+    let id = path.0.clone().parse::<i32>().unwrap();
+    let life_point = path.1.clone().parse::<bool>().unwrap();
+    let damage_point = path.2.clone().parse::<bool>().unwrap();
+    let mana_point = path.3.clone();
 
+    ops::character_ops::create_character(id, life_point, damage_point, mana_point);
+
+    println!("LOG actix; Character created succesfully");
     return HttpResponse::Ok().body("Created_user_char");
 
 }
@@ -79,6 +86,7 @@ async fn get_character(path: web::Path<String>) -> impl Responder {
     let haves_char = ops::character_ops::get_character(id);
 
 
+    println!("LOG actix; Character requested");
     return HttpResponse::Ok().json(haves_char);
    
 }
